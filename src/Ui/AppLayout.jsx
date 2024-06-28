@@ -1,26 +1,28 @@
-import { Outlet } from "react-router-dom"
-import CartOverview from "../Features/cart/CartOverview"
-import Header from "./Header"
+import { Outlet, useNavigate, useNavigation } from "react-router-dom";
+import CartOverview from "../Features/cart/CartOverview";
+import Header from "./Header";
+import Loader from "./Loader";
 
 function AppLayout() {
-    return (
-        <div>
-            <Header/>
+  const navigation = useNavigation();
+  
+  const isLoading = navigation.state === "loading"
 
-            <main>
-                <h1>
-                    Content
-                </h1>
-                <Outlet/>
-            </main>
+  return (
+    <div className="layout">
 
-            <CartOverview>
+    {isLoading && <Loader/>}
 
-            </CartOverview>
+      <Header />
 
+      <main>
+        <h1>Content</h1>
+        <Outlet />
+      </main>
 
-        </div>
-    )
+      <CartOverview></CartOverview>
+    </div>
+  );
 }
 
-export default AppLayout
+export default AppLayout;
